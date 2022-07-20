@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 import { Header } from '../components/Header'
 
-import { FilmCardWithTitle } from '../components/FilmCardWithTitle'
+import { FilmCardWithInfos } from '../components/FilmCardWithInfos'
 
 import { GetMoviesByTitle, MovieType } from '../utils/tmdb'
 
@@ -15,7 +15,7 @@ export default function Search() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const moviesRaw = await GetMoviesByTitle(titleForSearch)
-    const movies = moviesRaw.filter((i) => i.adult === false && i.backdrop_path)
+    const movies = moviesRaw.filter((i) => !i.adult && i.poster_path)
     setSearchedMovies(movies)
   }
 
@@ -50,7 +50,7 @@ export default function Search() {
         {SearchedMovies && (
           <ul className="mt-8 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
             {SearchedMovies.map((movie) => (
-              <FilmCardWithTitle key={movie.id} movie={movie} />
+              <FilmCardWithInfos key={movie.id} movie={movie} />
             ))}
           </ul>
         )}

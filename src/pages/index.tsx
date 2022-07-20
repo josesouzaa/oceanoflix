@@ -38,9 +38,7 @@ export default function Home({ TrendingMovies }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const moviesRaw = await GetTrendingMovies()
-  const TrendingMovies = moviesRaw.filter(
-    (i) => i.adult === false && i.backdrop_path
-  )
+  const TrendingMovies = moviesRaw.filter((i) => !i.adult && i.backdrop_path)
 
   return { props: { TrendingMovies } }
 }

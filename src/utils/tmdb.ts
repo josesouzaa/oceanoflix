@@ -5,6 +5,10 @@ export interface MovieType {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]
+  genres?: {
+    id: number
+    name: string
+  }[]
   id: number
   original_language: string
   original_title: string
@@ -19,21 +23,25 @@ export interface MovieType {
 }
 
 export async function GetTrendingMovies(): Promise<MovieType[]> {
-  const req = await fetch(`${apiURL}trending/movie/week?api_key=${apiKey}`)
+  const req = await fetch(
+    `${apiURL}trending/movie/week?api_key=${apiKey}&language=pt-BR&include_adult=false`
+  )
   const res = await req.json()
   return res.results
 }
 
 export async function GetMoviesByTitle(title: string): Promise<MovieType[]> {
   const req = await fetch(
-    `${apiURL}search/movie?api_key=${apiKey}&query=${title}`
+    `${apiURL}search/movie?api_key=${apiKey}&query=${title}&language=pt-BR&include_adult=false`
   )
   const res = await req.json()
   return res.results
 }
 
 export async function GetMovieById(id: number): Promise<MovieType> {
-  const req = await fetch(`${apiURL}movie/${id}?api_key=${apiKey}`)
+  const req = await fetch(
+    `${apiURL}movie/${id}?api_key=${apiKey}&language=pt-BR&include_adult=false`
+  )
   const res = await req.json()
   return res
 }
