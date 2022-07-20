@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :focus {
+    @apply outline-none ring-2 ring-brand-green-400 ring-offset-1 ring-offset-brand-blue-900;
+  }
+  body {
+    @apply bg-zinc-200 text-zinc-900 antialiased;
+  }
+}
+
+@layer utilities {
+  .custom-container {
+    @apply max-w-5xl mx-auto px-2 lg:px-0;
+  }
+}
