@@ -5,6 +5,7 @@ import { Header } from '../../components/Header'
 
 import { GetMovieById, MovieType } from '../../utils/tmdb'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface MovieProps {
   movie: MovieType
@@ -60,6 +61,12 @@ export default function Movie({ movie }: MovieProps) {
             <p className="bg-brand-green-400/60 p-2 rounded-r text-justify">
               {movie.overview}
             </p>
+
+            <Link href={`/similar/${movie.id}`}>
+              <a className="text-xs hover:underline transition">
+                Títulos semelhantes ⟶
+              </a>
+            </Link>
           </div>
         </div>
       </main>

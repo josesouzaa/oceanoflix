@@ -8,10 +8,6 @@ const itensMenu = [
   {
     name: 'Busca',
     slug: '/search'
-  },
-  {
-    name: 'Favoritos',
-    slug: '/favorites'
   }
 ]
 

@@ -25,7 +25,7 @@ export default function Search({ genres }: GenresProps) {
   const [titleForSearch, setTitleForSearch] = useState('')
 
   useEffect(() => {
-    if (moviesFiltred.length <= 0) {
+    if (moviesFiltred.length <= 0 && moviesByTitle.length > 0) {
       setError('Nenhum filme correspondente ao gênero')
     } else {
       setError(null)
@@ -90,21 +90,23 @@ export default function Search({ genres }: GenresProps) {
           </select>
         )}
 
-        {error === null && moviesFiltred.length > 0 ? (
+        {error === null && moviesFiltred.length > 0 && (
           <ul className="mt-4 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
             {moviesFiltred.map((movie) => (
               <FilmCardWithInfos key={movie.id} movie={movie} />
             ))}
           </ul>
-        ) : error === null ? (
+        )}
+
+        {error === null && moviesFiltred.length <= 0 && (
           <ul className="mt-4 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
             {moviesByTitle.map((movie) => (
               <FilmCardWithInfos key={movie.id} movie={movie} />
             ))}
           </ul>
-        ) : (
-          <p className="mt-8">{error}</p>
         )}
+
+        {error && <p className="mt-8">{error}</p>}
       </main>
     </>
   )

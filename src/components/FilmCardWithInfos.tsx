@@ -37,6 +37,12 @@ export function FilmCardWithInfos({ movie }: FilmCardWithInfosProps) {
         <p className="bg-brand-blue-400 p-2 rounded text-sm text-justify">
           {movie.overview}
         </p>
+
+        <Link href={`/similar/${movie.id}`}>
+          <a className="text-xs hover:underline transition">
+            Títulos semelhantes ⟶
+          </a>
+        </Link>
       </div>
     </li>
   )

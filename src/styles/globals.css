@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :focus {
+  :focus-visible {
     @apply outline-none ring-2 ring-brand-green-400;
   }
   body {

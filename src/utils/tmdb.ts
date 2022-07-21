@@ -58,3 +58,11 @@ export async function GetGenres(): Promise<GenresType[]> {
   const res = await req.json()
   return res.genres
 }
+
+export async function GetSimilarMovies(id: number): Promise<MovieType[]> {
+  const req = await fetch(
+    `${apiURL}movie/${id}/similar?api_key=${apiKey}&language=pt-BR&page=1`
+  )
+  const res = await req.json()
+  return res.results
+}
