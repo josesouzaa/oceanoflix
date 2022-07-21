@@ -26,7 +26,7 @@ interface GenresProps {
 
 export default function Search({ genres }: GenresProps) {
   const { moviesByTitle, moviesFiltred, error } = useSelector(
-    (state: RootState) => state.search
+    (state: RootState) => state.reducers.serachReducer
   )
   const dispatch = useDispatch()
   const [titleForSearch, setTitleForSearch] = useState('')
@@ -41,7 +41,7 @@ export default function Search({ genres }: GenresProps) {
     } else {
       dispatch(setErrorToNull())
     }
-  }, [moviesFiltred])
+  }, [moviesFiltred, dispatch])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -125,7 +125,7 @@ export default function Search({ genres }: GenresProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const genresRaw = await GetGenres()
 
-  const genres = [{ id: 0, name: 'Selecione uma opção' }, ...genresRaw]
+  const genres = [{ id: 0, name: 'Filtrar por gênero' }, ...genresRaw]
 
   return { props: { genres } }
 }
