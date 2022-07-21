@@ -35,7 +35,8 @@ export async function GetTrendingMovies(): Promise<MovieType[]> {
   return res.results
 }
 
-export async function GetMoviesByTitle(title: string): Promise<MovieType[]> {
+export async function GetMoviesByTitle(titleRaw: string): Promise<MovieType[]> {
+  const title = titleRaw.toLowerCase().replace(' ', '%20')
   const req = await fetch(
     `${apiURL}search/movie?api_key=${apiKey}&query=${title}&language=pt-BR&include_adult=false`
   )

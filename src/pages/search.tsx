@@ -7,45 +7,55 @@ import { Header } from '../components/Header'
 
 import { FilmCardWithInfos } from '../components/FilmCardWithInfos'
 
+import { GenresType, GetGenres, GetMoviesByTitle } from '../utils/tmdb'
+
+import type { RootState } from '../store/store'
+import { useSelector, useDispatch } from 'react-redux'
 import {
-  GenresType,
-  GetGenres,
-  GetMoviesByTitle,
-  MovieType
-} from '../utils/tmdb'
+  setMoviesByTitle,
+  filterMoviesByGenre,
+  setMoviesFiltredEqualToMoviesByTitle,
+  setErrorToNull,
+  setErrorToMessage,
+  resetStates
+} from '../store/reducers/search'
 
 interface GenresProps {
   genres: GenresType[]
 }
 
 export default function Search({ genres }: GenresProps) {
-  const [moviesByTitle, setMoviesByTitle] = useState([] as MovieType[])
-  const [moviesFiltred, setMoviesFiltred] = useState([] as MovieType[])
-  const [error, setError] = useState<null | string>(null)
+  const { moviesByTitle, moviesFiltred, error } = useSelector(
+    (state: RootState) => state.search
+  )
+  const dispatch = useDispatch()
   const [titleForSearch, setTitleForSearch] = useState('')
 
   useEffect(() => {
+    dispatch(resetStates())
+  }, [dispatch])
+
+  useEffect(() => {
     if (moviesFiltred.length <= 0 && moviesByTitle.length > 0) {
-      setError('Nenhum filme correspondente ao gênero')
+      dispatch(setErrorToMessage())
     } else {
-      setError(null)
+      dispatch(setErrorToNull())
     }
   }, [moviesFiltred])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    console.log(titleForSearch)
     const moviesRaw = await GetMoviesByTitle(titleForSearch)
     const movies = moviesRaw.filter((i) => !i.adult && i.poster_path)
-    setMoviesByTitle(movies)
+    dispatch(setMoviesByTitle(movies))
   }
 
   function handleFilter(genre: number) {
     if (genre > 0) {
-      setMoviesFiltred(
-        moviesByTitle.filter((movie) => movie.genre_ids.includes(genre))
-      )
+      dispatch(filterMoviesByGenre(genre))
     } else {
-      setMoviesFiltred(moviesByTitle)
+      dispatch(setMoviesFiltredEqualToMoviesByTitle())
     }
   }
 
