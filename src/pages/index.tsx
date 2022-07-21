@@ -11,6 +11,7 @@ interface HomeProps {
 }
 
 export default function Home({ TrendingMovies }: HomeProps) {
+  console.log(TrendingMovies)
   return (
     <>
       <Head>

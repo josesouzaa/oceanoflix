@@ -1,22 +1,52 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
 
 import { Header } from '../components/Header'
 
 import { FilmCardWithInfos } from '../components/FilmCardWithInfos'
 
-import { GetMoviesByTitle, MovieType } from '../utils/tmdb'
+import {
+  GenresType,
+  GetGenres,
+  GetMoviesByTitle,
+  MovieType
+} from '../utils/tmdb'
 
-export default function Search() {
-  const [SearchedMovies, setSearchedMovies] = useState([] as MovieType[])
+interface GenresProps {
+  genres: GenresType[]
+}
+
+export default function Search({ genres }: GenresProps) {
+  const [moviesByTitle, setMoviesByTitle] = useState([] as MovieType[])
+  const [moviesFiltred, setMoviesFiltred] = useState([] as MovieType[])
+  const [error, setError] = useState<null | string>(null)
   const [titleForSearch, setTitleForSearch] = useState('')
+
+  useEffect(() => {
+    if (moviesFiltred.length <= 0) {
+      setError('Nenhum filme correspondente ao gênero')
+    } else {
+      setError(null)
+    }
+  }, [moviesFiltred])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const moviesRaw = await GetMoviesByTitle(titleForSearch)
     const movies = moviesRaw.filter((i) => !i.adult && i.poster_path)
-    setSearchedMovies(movies)
+    setMoviesByTitle(movies)
+  }
+
+  function handleFilter(genre: number) {
+    if (genre > 0) {
+      setMoviesFiltred(
+        moviesByTitle.filter((movie) => movie.genre_ids.includes(genre))
+      )
+    } else {
+      setMoviesFiltred(moviesByTitle)
+    }
   }
 
   return (
@@ -42,19 +72,48 @@ export default function Search() {
               type="submit"
               className="rounded-r bg-brand-green-400 px-2 font-semibold hover:brightness-95 transition duration-300"
             >
-              Search
+              Buscar
             </button>
           </form>
         </div>
 
-        {SearchedMovies && (
-          <ul className="mt-8 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {SearchedMovies.map((movie) => (
+        {genres && (moviesFiltred.length > 0 || moviesByTitle.length > 0) && (
+          <select
+            className="text-black p-1 rounded text-xs mt-12"
+            onChange={(e) => handleFilter(Number(e.target.value))}
+          >
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {error === null && moviesFiltred.length > 0 ? (
+          <ul className="mt-4 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {moviesFiltred.map((movie) => (
               <FilmCardWithInfos key={movie.id} movie={movie} />
             ))}
           </ul>
+        ) : error === null ? (
+          <ul className="mt-4 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {moviesByTitle.map((movie) => (
+              <FilmCardWithInfos key={movie.id} movie={movie} />
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-8">{error}</p>
         )}
       </main>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const genresRaw = await GetGenres()
+
+  const genres = [{ id: 0, name: 'Selecione uma opção' }, ...genresRaw]
+
+  return { props: { genres } }
 }

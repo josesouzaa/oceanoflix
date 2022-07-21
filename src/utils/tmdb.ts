@@ -22,6 +22,11 @@ export interface MovieType {
   popularity: number
 }
 
+export interface GenresType {
+  id: number
+  name: string
+}
+
 export async function GetTrendingMovies(): Promise<MovieType[]> {
   const req = await fetch(
     `${apiURL}trending/movie/week?api_key=${apiKey}&language=pt-BR&include_adult=false`
@@ -44,4 +49,12 @@ export async function GetMovieById(id: number): Promise<MovieType> {
   )
   const res = await req.json()
   return res
+}
+
+export async function GetGenres(): Promise<GenresType[]> {
+  const req = await fetch(
+    `${apiURL}genre/movie/list?api_key=${apiKey}&language=pt-BR`
+  )
+  const res = await req.json()
+  return res.genres
 }

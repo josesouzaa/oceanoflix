@@ -10,10 +10,6 @@ const itensMenu = [
     slug: '/search'
   },
   {
-    name: 'Categorias',
-    slug: '/categorys'
-  },
-  {
     name: 'Favoritos',
     slug: '/favorites'
   }
