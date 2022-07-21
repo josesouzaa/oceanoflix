@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { GetServerSideProps, GetStaticPaths } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Header } from '../../components/Header'
 
@@ -81,7 +81,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const id = context?.params?.id
 
   const movie = await GetMovieById(Number(id))

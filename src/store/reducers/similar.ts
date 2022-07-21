@@ -26,9 +26,15 @@ const similarSlice = createSlice({
       state.moviesFiltred = state.moviesSimilar.filter((movie) =>
         movie.genre_ids.includes(action.payload)
       )
+      if (state.moviesFiltred.length <= 0 && state.moviesSimilar.length > 0) {
+        state.error = 'Nenhum filme correspondente ao gênero'
+      } else {
+        state.error = null
+      }
     },
     setMoviesFiltredEqualToMoviesSimilar: (state) => {
       state.moviesFiltred = state.moviesSimilar
+      state.error = null
     },
     setErrorToNull: (state) => {
       state.error = null

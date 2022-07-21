@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { GetServerSideProps, GetStaticPaths } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Header } from '../../components/Header'
 import { FilmCardWithInfos } from '../../components/FilmCardWithInfos'
@@ -17,8 +17,6 @@ import {
   setMoviesSimilar,
   filterMoviesByGenre,
   setMoviesFiltredEqualToMoviesSimilar,
-  setErrorToNull,
-  setErrorToMessage,
   resetStates
 } from '../../store/reducers/similar'
 import { useEffect } from 'react'
@@ -35,20 +33,9 @@ export default function Similar({ movies, genres }: MovieProps) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (moviesSimilar.length > 0) {
-      dispatch(resetStates())
-    } else {
-      dispatch(setMoviesSimilar(movies))
-    }
+    dispatch(resetStates())
+    dispatch(setMoviesSimilar(movies))
   }, [dispatch, movies])
-
-  useEffect(() => {
-    if (moviesFiltred.length <= 0 && moviesSimilar.length > 0) {
-      dispatch(setErrorToMessage())
-    } else {
-      dispatch(setErrorToNull())
-    }
-  }, [moviesFiltred, dispatch])
 
   function handleFilter(genre: number) {
     if (genre > 0) {
@@ -89,7 +76,7 @@ export default function Similar({ movies, genres }: MovieProps) {
 
         {error === null && moviesFiltred.length <= 0 && (
           <ul className="mt-4 grid grid-cols-none sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {moviesSimilar.map((movie) => (
+            {moviesSimilar?.map((movie) => (
               <FilmCardWithInfos key={movie.id} movie={movie} />
             ))}
           </ul>
@@ -108,7 +95,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const id = context?.params?.id
 
   const moviesRaw = await GetSimilarMovies(Number(id))
@@ -116,6 +103,8 @@ export const getStaticProps: GetServerSideProps = async (context) => {
 
   const genresRaw = await GetGenres()
   const genres = [{ id: 0, name: 'Filtrar por gênero' }, ...genresRaw]
+
+  console.log(movies[0])
 
   return {
     props: {

@@ -15,8 +15,6 @@ import {
   setMoviesByTitle,
   filterMoviesByGenre,
   setMoviesFiltredEqualToMoviesByTitle,
-  setErrorToNull,
-  setErrorToMessage,
   resetStates
 } from '../store/reducers/search'
 
@@ -34,14 +32,6 @@ export default function Search({ genres }: GenresProps) {
   useEffect(() => {
     dispatch(resetStates())
   }, [dispatch])
-
-  useEffect(() => {
-    if (moviesFiltred.length <= 0 && moviesByTitle.length > 0) {
-      dispatch(setErrorToMessage())
-    } else {
-      dispatch(setErrorToNull())
-    }
-  }, [moviesFiltred, dispatch])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
