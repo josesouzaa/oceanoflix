@@ -4,6 +4,8 @@ O OceanoFlix é um simples aplicação em NextJS onde é possível conferir os f
 
 ## ✨ Preview
 
+**[Deploy → oceanoflix.vercel.app](https://oceanoflix.vercel.app)**
+
 <img src="./preview.gif">
 
 ## 🛠 Builded with
