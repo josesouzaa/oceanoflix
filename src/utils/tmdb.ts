@@ -1,5 +1,5 @@
 export const apiURL = 'https://api.themoviedb.org/3/'
-export const apiKey = '667d72d31a54d86846d2caeb0816e58f'
+export const apiKey = process.env.NEXT_PUBLIC_API_KEY
 
 export interface MovieType {
   adult: boolean

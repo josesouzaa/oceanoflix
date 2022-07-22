@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OceanoFlix
+
+O OceanoFlix é um simples aplicação em NextJS onde é possível conferir os filmes em alta da semana, além de possibilitar a busca por título. Os dados são acessados via API do [TMDB](https://www.themoviedb.org/).
+
+## ✨ Preview
+
+<img src="./preview.gif">
+
+## 🛠 Builded with
+
+![HTML](https://img.shields.io/badge/-HTML-05122A?style=flat&logo=HTML5)
+![CSS](https://img.shields.io/badge/-CSS-05122A?style=flat&logo=CSS3&logoColor=1572B6)
+![Tailwind](https://img.shields.io/badge/-Tailwind-05122A?style=flat&logo=TailwindCSS)
+![NextJS](https://img.shields.io/badge/-NextJS-05122A?style=flat&logo=Next.js)
+![TypeScript](https://img.shields.io/badge/-TypeScript-05122A?style=flat&logo=typescript)
+![Redux](https://img.shields.io/badge/-Redux-05122A?style=flat&logo=Redux)
 
 ## Getting Started
 
-First, run the development server:
+Para iniciar o projeto localmente é preciso ter uma API KEY do TMDB, que é fornecida facilmente ao realizar o login no [site](https://www.themoviedb.org/).
+
+- Adicione sua API KEY ao .env.local no root do projeto (siga o env.local.exemple);
+
+- Em seguida rode o comando para instalar as dependência;
+
+```bash
+npm i
+# or
+yarn
+```
+
+- E por fim rode a aplicação localmente.
 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
