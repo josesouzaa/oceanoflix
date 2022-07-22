@@ -104,8 +104,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const genresRaw = await GetGenres()
   const genres = [{ id: 0, name: 'Filtrar por gênero' }, ...genresRaw]
 
-  console.log(movies[0])
-
   return {
     props: {
       movies,

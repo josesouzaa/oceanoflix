@@ -35,7 +35,6 @@ export default function Search({ genres }: GenresProps) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    console.log(titleForSearch)
     const moviesRaw = await GetMoviesByTitle(titleForSearch)
     const movies = moviesRaw.filter((i) => !i.adult && i.poster_path)
     dispatch(setMoviesByTitle(movies))
@@ -64,6 +63,7 @@ export default function Search({ genres }: GenresProps) {
             <input
               className="text-black p-2 rounded-l"
               type="text"
+              placeholder="Digite o título do filme"
               value={titleForSearch}
               onChange={(e) => setTitleForSearch(e.target.value)}
             />
