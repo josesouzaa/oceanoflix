@@ -35,6 +35,7 @@ export default function Search({ genres }: GenresProps) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    dispatch(resetStates())
     const moviesRaw = await GetMoviesByTitle(titleForSearch)
     const movies = moviesRaw.filter((i) => !i.adult && i.poster_path)
     dispatch(setMoviesByTitle(movies))
